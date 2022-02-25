@@ -1,0 +1,119 @@
+syntax = 'proto3';
+
+option go_package = "github/tluo-github/server";
+
+service Cri {
+  rpc Version(VersionRequest) returns (VersionResponse) {}
+  rpc CreateContainer(CreateContainerRequest) returns (CreateContainerResponse) {}
+  rpc StartContainer(StartContainerRequest) returns (StartContainerResponse) {}
+  rpc StopContainer(StopContainerRequest) returns (StopContainerResponse) {}
+  rpc RemoveContainer(RemoveContainerRequest) returns (RemoveContainerResponse) {}
+  rpc ListContainers(ListContainersRequest) returns (ListContainersResponse) {}
+  rpc ContainerStatus(ContainerStatusRequest) returns (ContainerStatusResponse) {}
+  rpc Attach(AttachRequest) returns (AttachResponse) {}
+  // rpc Exec
+  // rpc ExecSync
+  // rpc PortForward
+
+  // rpc ReopenContainerLog
+  // ...
+}
+message VersionRequest {}
+
+message VersionResponse {
+  string version = 1;
+  string runtime_name = 2;
+  string runtime_version = 3;
+}
+
+message CreateContainerRequest {
+  string name = 1;
+  string rootfs_path = 2;
+  bool rootfs_readonly = 3;
+  string command = 4;
+  repeated string args = 5;
+  // 保持容器的 stdin 打开
+  bool stdin = 6;
+  // if true, stdin 将在第一个 attach session 结束后关闭
+  bool stdin_once = 7;
+}
+
+message CreateContainerResponse {
+  string container_id = 1;
+}
+
+message StartContainerRequest {
+  string container_id = 1;
+}
+
+message StartContainerResponse{}
+
+message StopContainerRequest {
+  string container_id = 1;
+  // 强杀容器之前的超时秒数
+  int64 timeout = 2;
+}
+
+message StopContainerResponse{}
+
+message RemoveContainerRequest{
+  string container_id = 1;
+}
+
+message RemoveContainerResponse{}
+
+message ListContainersRequest {}
+
+message ListContainersResponse{
+  repeated Container containers = 1;
+}
+
+message ContainerStatusRequest {
+  string container_id = 1;
+}
+
+message ContainerStatusResponse {
+  ContainerStatus status = 1;
+}
+
+message Container {
+  string id = 1;
+  string name = 2;
+  // Unix time 纳秒
+  int64 created_at = 3;
+  ContainerState state = 4;
+}
+
+message ContainerStatus {
+  string container_id = 1;
+  string container_name = 2;
+  ContainerState state = 3;
+  int64 created_at = 4;
+  int64 started_at = 5;
+  int64 finished_at = 6;
+  // Exit code, 仅在 finished_at !=0 时。
+  int32 exit_code = 7;
+  // 关于当前容器状态的人类可读信息
+  string message = 8;
+  // 容器日志文件
+  string log_path = 9;
+}
+
+enum ContainerState{
+  CREATED = 0;
+  RUNNING = 1;
+  EXITED = 2;
+  UNKNOW = 3;
+}
+
+message AttachRequest {
+  string container_id =1;
+  bool tty =2 ;
+  bool stdin = 3;
+  bool stdout = 4;
+  bool stderr = 5;
+}
+
+message AttachResponse{
+  string url = 1;
+}

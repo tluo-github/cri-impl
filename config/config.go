@@ -15,4 +15,14 @@ type Config struct {
 	Listen string
 	// LibRoot 用于存储长期存在的数据
 	LibRoot string
+	// RunRoot 用于存储 cri-impl 守护程序的 root path
+	RunRoot string
+	// ContainerLogRoot 存放容器日志目录
+	ContainerLogRoot string
+	// StreamingAddr 流服务 host:port( for attach,exec,port-forwarding)
+	StreamingAddr string
+	// ShimmyPath OCI 运行时 shim 可执行文件(shimmy)
+	ShimmyPath  string
+	RuntimePath string
+	RuntimeRoot string
 }
