@@ -28,5 +28,11 @@ test/data/rootfs_alpine:
 	docker export ${CID} | tar -C ${ROOT_DIR}/test/data/rootfs_alpine/ -xvf -
 	docker rm ${CID}
 
+pre_mkdir:
+	mkdir -p /var/log/cri-impl/container
+	mkdir -p /var/lib/cri-impl
+	mkdir -p /var/run/cri-impl
+	mkdir -p /var/run/cri-impl-runc
+
 clean:
 	rm -rf bin/*
