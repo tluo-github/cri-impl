@@ -29,7 +29,7 @@ test/data/rootfs_alpine:
 	docker rm ${CID}
 
 pre_mkdir:
-	mkdir -p /var/log/cri-impl/container
+	mkdir -p /var/log/cri-impl/containers
 	mkdir -p /var/lib/cri-impl
 	mkdir -p /var/run/cri-impl
 	mkdir -p /var/run/cri-impl-runc
