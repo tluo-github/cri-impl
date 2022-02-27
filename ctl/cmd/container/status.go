@@ -20,7 +20,7 @@ var statusCmd = &cobra.Command{
 		resp, err := client.ContainerStatus(
 			context.Background(),
 			&server.ContainerStatusRequest{
-				ContainerId: args[1],
+				ContainerId: args[0],
 			},
 		)
 		if err != nil {
