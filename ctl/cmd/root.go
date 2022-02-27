@@ -26,7 +26,7 @@ func Execute() {
 
 func init() {
 	RootCmd.PersistentFlags().StringVarP(&OptHost,
-		"host", "h",
+		"host", "H",
 		"/var/run/cri-impl.sock",
 		"cri-impl 守护进程 sock")
 }

@@ -21,7 +21,10 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/tluo-github/cri-impl/ctl/cmd"
+import (
+	"github.com/tluo-github/cri-impl/ctl/cmd"
+	_ "github.com/tluo-github/cri-impl/ctl/cmd/container"
+)
 
 func main() {
 	cmd.Execute()
